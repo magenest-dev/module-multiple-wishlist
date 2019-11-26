@@ -1,0 +1,58 @@
+<?php
+$customerId = $block->getCustomer();
+$collection = $block->getCollectionWishList();
+$dataWishList = $block->getWishListMain($collection);
+?>
+<div style="border: 1px solid #ccc;border-radius: 0 0 30px 30px; width: 660px; margin: 0 auto;">
+    <div class="top-container" style="background: #4A4A4A; text-align: center; padding: 20px 120px;">
+        <img src='<?php echo $this->getViewFileUrl('Magenest_MultipleWishlist::images/icon-email-2.png'); ?>' alt="Email Icon">
+        <h3 style="color:#ffffff; margin: 15px 0 20px 0"><strong><?= __('Forget something in your wishlist?') ?></strong></h3>
+        <p style="margin: 0;padding: 0; color:#ffffff;"><?= __('We noticed that you left these items quite a long time in your wishlist. If you still can\'t decide, check out the helpful reviews from recent buyers.') ?></p>
+    </div>
+    <table style="width: 100%;margin: 20px 0;">
+        <tbody style="text-align: center">
+                <?php $i = 0;
+                if (!empty($dataWishList)){
+                foreach ($dataWishList
+
+                as $item):
+                $i++ ?>
+                <?php /* @var $item \Magenest\MultipleWishlist\Model\Item */ ?>
+                <?php /* @var $_product \Magento\Catalog\Model\Product */ ?>
+            <tr class="col product">
+                <td style="width: 65%;vertical-align: middle;">
+                    <p>
+                        <a href="<?= /* @escapeNotVerified */
+                        $item['product_url'] ?>">
+                            <img style="width: 250px;height: 250px" src="<?php echo $item['img_link']; ?>">
+                        </a>
+                    </p>
+                </td>
+                <td style="width: 35%;vertical-align: middle;text-align: left;">
+                    <p>
+                        <a style="color:#000;" href="<?= /* @escapeNotVerified */
+                        $item['product_url'] ?>">
+                            <strong style="text-transform: capitalize"><?= $item['product_name'] ?></strong>
+                        </a>
+                    </p>
+                    <?php if(isset($item['ratings'])) {?>
+                    <div style="display: inline-block;padding-bottom: 10px;">
+                        <div style="background:url('<?php echo $this->getViewFileUrl('Magenest_MultipleWishlist::images/rating-bg.png'); ?>') repeat-x 0 0;font-size: 0;height: 13px;line-height: 0;margin: 4px 0 0;overflow: hidden;width: 90px;">
+                            <div style="background:url('<?php echo $this->getViewFileUrl('Magenest_MultipleWishlist::images/rating-bg.png'); ?>') repeat-x 0 -13px;height: 13px;width:<?= $item['ratings'] ?>%;"></div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <p style="color:#6F9733; font-size: 15px"><strong><?= $item['price'] ?></strong></p>
+                </td>
+            </tr>
+                <?php endforeach ?>
+                <?php } else { ?>
+                    <div class="message info empty">
+                        <div><?php /* @escapeNotVerified */
+                            echo __('Wish List is empty now.') ?></div>
+                    </div>
+                <?php } ?>
+        </tbody>
+    </table>
+</div>
+

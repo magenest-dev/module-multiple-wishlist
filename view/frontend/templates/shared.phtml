@@ -1,0 +1,155 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magenest\MultipleWishlist\Block\Share\MultipleWishlist */
+?>
+<?php
+$array = $block->getWishlistId();
+if ($array['wishListId']) {
+    $wishlistId = $array['wishListId'];
+    $list = $block->getWishlistItemCount($wishlistId);
+    ?>
+    <?php if ($list != 0): ?>
+            <div class="wishlist table-wrapper">
+                <table class="table data wishlist" id="wishlist-table">
+                    <caption class="table-caption"><?php /* @escapeNotVerified */
+                        echo __('Wish List'); ?></caption>
+                    <thead>
+                    <tr>
+                        <th class="col product" scope="col"><?php /* @escapeNotVerified */
+                            echo __('Product') ?></th>
+                        <th class="col actions" scope="col"><?php /* @escapeNotVerified */
+                            echo __('Add to Cart') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($block->getWishlistItems($wishlistId) as $item): ?>
+                        <tr>
+                            <td data-th="<?php echo $block->escapeHtml(__('Product')) ?>" class="col product">
+                                <a class="product photo" href="<?= /* @escapeNotVerified */
+                                $item['product_url'] ?>">
+                                    <img style="width: 200px;height: 250px;" src="<?php echo $item['img_link']; ?>">
+                                </a>
+                                <strong class="product name">
+                                    <a href="<?= /* @escapeNotVerified */
+                                    $item['product_url'] ?>">
+                                        <strong><?= $item['product_name'] ?></strong>
+                                    </a>
+                                </strong>
+                                <strong><?= $item['price'] ?></strong>
+                            </td>
+                            <td>
+                                <form action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/cart'); ?>">
+                                    <span style="display: inline;">
+                                        <input type="hidden" name="item" value="<?php echo $item['id']; ?>">
+                                        <input type="hidden" name="form_key" value="<?php echo $block->getFormKey(); ?>">
+                                        <button class="action tocart primary"
+                                                type="submit">Add to Cart</button>
+                                         <input style="width: 70px;text-align: center" class="qty-input"
+                                                type="number" name="qty[<?php echo $item['id']; ?>]"
+                                                value="<?=(int)$item['qty']?>">
+                                    </span>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <form style="margin-right: 20px;margin-left: 20px" method="post"
+                          action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/allcart'); ?>">
+                        <input type="hidden" name="form_key" value="<?php echo $block->getFormKey(); ?>">
+                        <input type="hidden" name="wishlist" value="<?php echo $wishlistId; ?>">
+                        <button type="submit" class="action tocart primary"><?=__('Add All to cart')?></button>
+                    </form>
+                </div>
+            </div>
+    <?php else: ?>
+        <div class="message info empty">
+            <div><?php /* @escapeNotVerified */
+                echo __('Wish List is empty now.') ?></div>
+        </div>
+    <?php endif ?>
+<?php } elseif ($array['wishListMainId']) {
+    $wishlistId = $array['wishListMainId'];
+    $list = $block->getWishlistItemMainCount($wishlistId);
+    ?>
+    <?php if ($list != 0): ?>
+            <div class="wishlist table-wrapper">
+                <table class="table data wishlist" id="wishlist-table">
+                    <caption class="table-caption"><?php /* @escapeNotVerified */
+                        echo __('Wish List'); ?></caption>
+                    <thead>
+                    <tr>
+                        <th class="col product" scope="col"><?php /* @escapeNotVerified */
+                            echo __('Product') ?></th>
+                        <th class="col actions" scope="col"><?php /* @escapeNotVerified */
+                            echo __('Add to Cart') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($block->getWishlistMainItems($wishlistId) as $item): ?>
+                        <tr>
+                            <td data-th="<?php echo $block->escapeHtml(__('Product')) ?>" class="col product">
+                                <a class="product photo" href="<?= /* @escapeNotVerified */
+                                $item['product_url'] ?>">
+                                    <img style="width: 200px;height: 250px;" src="<?php echo $item['img_link']; ?>">
+                                </a>
+                                <strong class="product name">
+                                    <a href="<?= /* @escapeNotVerified */
+                                    $item['product_url'] ?>">
+                                        <strong><?= $item['product_name'] ?></strong>
+                                    </a>
+                                </strong>
+                                <strong><?= $item['price'] ?></strong>
+                            </td>
+                            <td>
+                                <form action="<?php echo($block->getBaseUrl() . 'wishlist/index/cart'); ?>"
+                                      method="post">
+                            <span style="display: inline;">
+                                <input type="hidden" name="item" value="<?php echo $item['id']; ?>">
+                                <input type="hidden" name="form_key" value="<?php echo $block->getFormKey(); ?>">
+                                <button class="action tocart primary"
+                                        type="submit">Add to Cart</button>
+                                 <input style="width: 70px;text-align: center" class="qty-input"
+                                        type="number" name="qty[<?php echo $item['id']; ?>]"
+                                        value="<?php echo (int)$item['qty']; ?>">
+                            </span>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="button"
+                            title="<?= $block->escapeHtmlAttr(__('Add All to Cart')) ?>"
+                            data-post='<?= $block->escapeUrl($block->getSharedAddAllToCartUrl()) ?>'
+                            class="action tocart primary">
+                        <span><?= $block->escapeHtml(__('Add All to Cart')) ?></span>
+                    </button>
+                </div>
+            </div>
+    <?php else: ?>
+        <div class="message info empty">
+            <div><?php /* @escapeNotVerified */
+                echo __('Wish List is empty now.') ?></div>
+        </div>
+    <?php endif ?>
+<?php } else {
+    ?>
+    <div class="message info empty">
+    <div><?php /* @escapeNotVerified */
+        echo __('Wish List is empty now.') ?></div></div>
+<?php } ?>

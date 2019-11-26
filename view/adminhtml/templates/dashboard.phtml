@@ -1,0 +1,32 @@
+<?php
+$var = $block->getReportCollection();
+$percent = $block->getPercentCount();
+?>
+
+<div class="dashboard-secondary" style="    width: 33.33333%;padding-right: 3.5rem;
+">
+<div class="dashboard-item">
+<div class="dashboard-item-title"><span><?=__('WishList')?></span><span style="float: right;"><a href="<?php echo($block->getBaseUrl() . 'admin/multiplewishlist/report');?>"><?=__('Detail')?></a></span></div>
+<div class="dashboard-item-content" style="overflow-y: auto;height: 300px;">
+    <table class="admin__table-primary dashboard-data" id="my-orders-table">
+        <thead>
+        <tr>
+            <th class="data-grid-th col-search-query no-link col-search_query"><span><?php echo __('Product Name') ?></span></th>
+            <th class="data-grid-th  no-link col-num_results"><span><?php echo __('Count Added WishList') ?></span></th>
+            <!--<th class="data-grid-th  no-link col-popularity"><span><?php /*echo __('Percent Converted To Order') */?></th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($var as $data): ?>
+                    <tr class="even _clickable">
+                        <td class="col-search-query col-search_query    "><?php echo $data['name']; ?></td>
+                        <td class="col-num_results col-number "><?php echo $data['count'];?></td>
+<!--                        <td class="col-popularity col-number last"><span style="color: #0fa7ff"><?php /*$var=round($data['addOrder']/$data['count']*100);if($var > 100) echo "100%"; else echo $var."%";*/?></span></td>
+-->                    </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>

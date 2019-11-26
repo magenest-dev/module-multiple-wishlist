@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magenest_MultipleWishlist::css/sharing.css"/>
+        <script src="Magenest_MultipleWishlist::js/share-wishlist.js"/>
+        <script src="Magenest_MultipleWishlist::js/sharing.js"/>
+    </head>
+    <body>
+        <referenceBlock name="head.additional">
+            <block class="Magenest\MultipleWishlist\Block\Share\TagSocialShare" name="social_tags" template="Magenest_MultipleWishlist::social_tags.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Home</item>
+                    <item name="label" xsi:type="string">Home</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Wishlist Shared</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Wishlist Shared</item>
+                    <item name="label" xsi:type="string">Wishlist Shared</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magenest\MultipleWishlist\Block\Share\Sharing" name="wishlist.sharing"
+                   template="Magenest_MultipleWishlist::sharing.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

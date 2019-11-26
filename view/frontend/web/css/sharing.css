@@ -1,0 +1,9 @@
+.multiplewishlist-social {
+    display:block;
+    width:100%;
+}
+.multiplewishlist-social .social-button {
+    display:inline-block;
+    vertical-align:top;
+    margin-right:5px;
+}

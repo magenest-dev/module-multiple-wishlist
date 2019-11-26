@@ -1,0 +1,25 @@
+{
+  "name": "magenest/module-multiple-wishlist",
+  "description": "Multiple Wishlist extension by Magenest",
+  "require": {
+    "magenest/core": "*"
+  },
+  "type": "magento2-module",
+  "version": "1.3.1",
+  "license": [
+    "BSD-3-Clause"
+  ],
+  "authors": [
+     {
+       "name": "Magenest JSC"
+     }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Magenest\\MultipleWishlist\\": ""
+    }
+  }
+}

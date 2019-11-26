@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=
+        "urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <add id="Magenest_MultipleWishlist::Report_MultipleWishlist"
+             title="Report MultipleWishlist"
+             module="Magenest_MultipleWishlist"
+             sortOrder="10"
+             resource="Magenest_MultipleWishlist::Report_MultipleWishlist"
+             parent="Magento_Reports::report"
+        />
+        <!-- START: new node -->
+        <add id="Magenest_MultipleWishlist::Report_Wishlist"
+             title="Report Product In Wishlist"
+             module="Magenest_MultipleWishlist"
+             sortOrder="15"
+             resource="Magenest_MultipleWishlist::Report_Wishlist"
+             parent="Magenest_MultipleWishlist::Report_MultipleWishlist"
+             action="multiplewishlist/report"
+        />
+    </menu>
+</config>

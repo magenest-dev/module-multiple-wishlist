@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magenest_MultipleWishlist::css/view.css"/>
+    </head>
+    <body>
+        <referenceBlock name="content">
+            <block class="Magenest\MultipleWishlist\Block\Modal\Data" name="magenest_modal_content"
+                   template="Magenest_MultipleWishlist::popup-modal.phtml" cacheable="false"/>
+        </referenceBlock>
+    </body>
+</page>

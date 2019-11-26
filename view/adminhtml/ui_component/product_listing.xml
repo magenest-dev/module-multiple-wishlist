@@ -1,0 +1,18 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="product_columns" class="Magento\Catalog\Ui\Component\Listing\Columns">
+        <column name="count" sortOrder="130">
+            <settings>
+                <addField>true</addField>
+                <filter>text</filter>
+                <label translate="true">Count Added WishList</label>
+            </settings>
+        </column>
+        <column name="last_added" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="150">
+            <settings>
+                <addField>true</addField>
+                <filter>dateRange</filter>
+                <label translate="true">Last Added WishList</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

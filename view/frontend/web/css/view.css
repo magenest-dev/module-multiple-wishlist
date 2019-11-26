@@ -1,0 +1,77 @@
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #D8D8D8;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #D8D8D8;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+div.mw-products {
+    width:100%;
+    height: 100%;
+}
+
+div.mw-product {
+    float:left;
+    display:inline-block;
+    width: 300px;
+    height: 100%;
+}
+
+div.product-details {
+    float: right !important;
+    display: inline-block;
+    width: -moz-calc(100% - 300px) !important;
+    width: -webkit-calc(100% - 300px) !important;
+    width: calc(100% - 300px) !important;
+    height: 100% !important;
+}
+
+.modal-inner-wrap{
+    width: 40% !important;
+}
+
+input .newWishLisht{
+    width: 35%;
+    margin-right: 3%;
+}
+.multiplewishlist-social {
+    display:block;
+    width:1000px;
+}
+.multiplewishlist-social .social-button {
+    display:inline-block;
+    vertical-align:top;
+    margin-right:5px;
+}

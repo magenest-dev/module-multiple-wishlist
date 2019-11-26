@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magenest\MultipleWishlist\Block\Share\Email\Items */
+
+?>
+<?php   $wishlistId = $block->getWishlistId();
+        $list = $block->getWishlistItemCount($wishlistId);
+?>
+
+<div>
+    <table>
+        <tr>
+            <?php $i = 0;
+            if(!empty($wishlistId)){
+            foreach ($block->getWishlistItems($wishlistId) as $item): $i++ ?>
+            <?php /* @var $item \Magenest\MultipleWishlist\Model\Item */ ?>
+            <?php /* @var $_product \Magento\Catalog\Model\Product */ ?>
+            <td class="col product">
+                <p>
+                    <a href="<?= /* @escapeNotVerified */  $item['product_url'] ?>">
+                        <img src="<?php echo $item['img_link']; ?>" style="width: 135px;height: 135px">
+                    </a>
+                </p>
+
+                <p>
+                    <a href="<?= /* @escapeNotVerified */  $item['product_url'] ?>">
+                        <strong><?= $item['product_name'] ?></strong>
+                    </a>
+                </p>
+                <?php if (!empty($item['description'])) :?>
+                    <p>
+                        <strong><?= /* @escapeNotVerified */  __('Comment') ?>:</strong>
+                        <br/><?= /* @escapeNotVerified */  $item['description'] ?>
+                    </p>
+                <?php endif; ?>
+                <p>
+                    <a href="<?= /* @escapeNotVerified */  $item['product_url'] ?>">
+                        <?= /* @escapeNotVerified */  __('View Product') ?>
+                    </a>
+                </p>
+            </td>
+            <?php if ($i % 3 != 0): ?>
+                <td></td>
+            <?php else: ?>
+        </tr>
+        <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+            <?php if ($i < $list): ?>
+            <tr>
+            <?php endif ?>
+            <?php endif ?>
+            <?php endforeach ?>
+        <?php }else{ ?>
+            <div class="message info empty">
+                <div><?php /* @escapeNotVerified */
+                    echo __('Wish List is empty now.') ?></div></div>
+        <?php }?>
+    </table>
+</div>

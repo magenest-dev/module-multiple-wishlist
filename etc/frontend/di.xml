@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Wishlist\Controller\Index\Index">
+        <plugin name="magenest-mwishlist-controller-index-index" type="Magenest\MultipleWishlist\Plugin\WishlistPlugin" sortOrder="5" disabled="true"/>
+    </type>
+    <type name="Magento\Wishlist\Controller\Index\Send">
+        <plugin name="magenest-mwishlist-controller-index-send" type="Magenest\MultipleWishlist\Plugin\Send" sortOrder="10" disabled="false"/>
+    </type>
+    <type name="Magento\Wishlist\Controller\Shared\Index">
+        <plugin name="magenest-mwishlist-controller-shared-index" type="Magenest\MultipleWishlist\Plugin\Shared\Index" sortOrder="15" disabled="false"/>
+    </type>
+</config>

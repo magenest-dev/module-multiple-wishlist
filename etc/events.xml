@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="Add_Product_to_ReportWishlist">
+        <observer name="AddProductToReportWishlist" instance="Magenest\MultipleWishlist\Observer\AddProductToReportWishlist" />
+    </event>
+    <event name="admin_system_config_changed_section_multiplewishlist">
+        <observer name="AfterSaveStoreConfig" instance="Magenest\MultipleWishlist\Observer\AfterSaveStoreConfig" />
+    </event>
+</config>

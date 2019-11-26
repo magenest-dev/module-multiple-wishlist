@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="magenest_cron_sendemail">
+        <job name="magenest_cron_send_mail"
+             instance="Magenest\MultipleWishlist\Cron\Sendmail"
+             method="execute">
+            <schedule>0 7 * * *</schedule>
+        </job>
+        <job name="magenest_cron_send_mail_product_out_of_stock"
+             instance="Magenest\MultipleWishlist\Cron\SendMailProductOutOfStock"
+             method="execute">
+            <schedule>* * * * *</schedule>
+        </job>
+    </group>
+</config>

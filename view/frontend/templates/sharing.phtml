@@ -1,0 +1,168 @@
+<?php
+$wishlistId = $block->getWishlistId();
+$enableFacebook = $block->_scopeConfig->getValue('multiplewishlist/general/enable_facebook', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+$enableTwitter = $block->_scopeConfig->getValue('multiplewishlist/general/enable_twitter', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+?>
+<?php if ($wishlistId != 'main') {
+    $list = $block->getWishlistItemCount($wishlistId); ?>
+    <h1 style="font-size: 30px"><?=__('Wishlist Name: ')?><?= ucwords(__($block->getNameWishList())); ?></h1>
+    <div>This wishlist is shared by <?= __($block->getCustomer()); ?></div>
+    <br>
+    <div class="multiplewishlist-social">
+    <?php if ($block->getWishlistItems($wishlistId) != null) { ?>
+        <?php
+        if ($enableFacebook == 1):
+            echo $block->getFacebookButton();
+        endif;
+        if ($enableTwitter == 1):
+            echo $block->getTwitterButton();
+        endif;
+        ?>
+        <button class="share-wishlist" id="share-gmail" style="background: #C23B2C; border: none" value="<?php echo $wishlistId; ?>">
+            <img src="<?php echo $this->getViewFileUrl('Magenest_MultipleWishlist::images/icons8-gmail.svg'); ?>" />
+            <p><?= __('Gmail') ?></p>
+        </button>
+        </div>
+<div style="display: block;">
+        <div class="products wrapper grid products-grid">
+        <ol class="products list items product-items">
+            <?php foreach ($block->getWishlistItems($wishlistId) as $item): ?>
+                <li class="item product product-item" data-container="product-grid" style="padding: 10px;margin: 1px 1px;">
+                    <div id="<?php echo $item['id']; ?>" class="product-item-info" data-container="product-grid" style="width: 100%">
+                        <a href="<?php echo $item['product_url']; ?>" class="product photo product-item-photo"
+                           tabindex="-1">
+                            <span class="product-image-container" style="width:240px;">
+                                <span class="product-image-wrapper" style="padding-bottom: 125%;">
+                                    <img class="product-image-photo" width="240" height="300"
+                                         src="<?php echo $item['img_link']; ?>">
+                                </span>
+                            </span>
+                        </a>
+                        <div class="product details product-item-details">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link" href="<?php echo $item['product_url']; ?>"
+                                   title="<?php echo $item['product_name']; ?>">
+                                    <?php echo $item['product_name']; ?>
+                                </a>
+                            </strong>
+                            <?php echo $item['price']; ?>
+                            <div class="product-item-inner" style="margin: 9px 0 0 -1px;">
+                                <div class="product actions product-item-actions">
+                                    <div class="actions-primary" style="align-items: center">
+                                        <form action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/cart'); ?>"
+                                              class="addToCart" style="display: flex; align-items: center;">
+                                            <input type="hidden" name="form_key"
+                                                   value="<?php echo $block->getFormKey(); ?>">
+                                            <input type="hidden" name="item" value="<?php echo $item['id']; ?>">
+                                            <strong>Qty</strong>
+                                            <input style="width: 55px;text-align: center; margin-left: 10px"
+                                                   class="main-qty"
+                                                   type="number"
+                                                   name="qty[<?php echo $item['id']; ?>]"
+                                                   value="<?php echo (int)$item['qty']; ?>">
+                                            <input class="action tocart primary" style="margin-left: 10px" type="submit" name="submit"
+                                                   value="Add to Cart">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    <?php } else { ?>
+        <div class="message info empty">
+            <div><?php /* @escapeNotVerified */
+                echo __('Wish List is empty now.') ?></div>
+        </div>
+    <?php } ?>
+    </div>
+    </div>
+<?php } elseif($block->getCustomerMain()!=false) {
+    $list = $block->getWishlistItemCountMain();
+    $customerName = $block->getCustomerMain();
+    ?>
+    <div><b style="font-size: 30px">Share Main Wishlist Information</b></div>
+    <br>
+    <div>This wishlist is shared by <?= __($block->getCustomerMain()); ?></div>
+    <br>
+    <div class="multiplewishlist-social">
+    <?php if (($block->getMainWishlist()) != null) { ?>
+        <?php
+        if ($enableFacebook == 1):
+            echo $block->getFacebookButton();
+        endif;
+        if ($enableTwitter == 1):
+            echo $block->getTwitterButton();
+        endif;
+        ?>
+        <button class="share-wishlist" id="share-gmail" style="background: #C23B2C; border: none"
+                value="0">
+            <img src="<?php echo $this->getViewFileUrl('Magenest_MultipleWishlist::images/icons8-gmail.svg'); ?>" />
+            <p><?= __('Gmail') ?></p>
+        </button>
+        </div>
+
+        <div class="products wrapper grid products-grid">
+        <ol class="products list items product-items">
+            <?php foreach ($block->getMainWishlist() as $item): ?>
+                <li class="item product product-item" style="padding: 10px;margin: 1px 1px;">
+                    <div id="<?php echo $item['id']; ?>" class="product-item-info" data-container="product-grid" style="width: 100%">
+                        <a href="<?php echo $item['product_url']; ?>" class="product photo product-item-photo" tabindex="-1">
+                            <span class="product-image-container" style="width:240px;">
+                                <span class="product-image-wrapper" style="padding-bottom: 125%;">
+                                    <img class="product-image-photo" width="240" height="300"
+                                         src="<?php echo $item['img_link']; ?>">
+                                </span>
+                            </span>
+                        </a>
+                        <div class="product details product-item-details">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link" href="<?php echo $item['product_url']; ?>"
+                                   title="<?php echo $item['product_name']; ?>">
+                                    <?php echo $item['product_name']; ?>
+                                </a>
+                            </strong>
+                            <?php echo $item['price']; ?>
+                            <div class="product-item-inner" style="margin: 9px 0 0 -1px;">
+                                <div class="product actions product-item-actions">
+                                    <div class="actions-primary">
+                                        <form class="tocart-form"
+                                              action="<?php echo($block->getBaseUrl() . 'wishlist/index/cart'); ?>"
+                                              method="post">
+                                            <strong>Qty</strong>
+                                            <input style="width: 55px;text-align: center;"
+                                                   class="main-qty"
+                                                   type="number"
+                                                   name="qty[<?php echo $item['id']; ?>]"
+                                                   value="<?php echo (int)$item['qty']; ?>">
+                                            <input type="hidden" name="form_key"
+                                                   value="<?php echo $block->getFormKey(); ?>">
+                                            <input type="hidden" name="item" value="<?php echo $item['id']; ?>">
+                                            <input type="submit" name="item" class="action tocart primary"
+                                                   id="submit"
+                                                   value="<?= __("Add to Cart"); ?>">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    <?php } else { ?>
+        <div class="message info empty">
+            <div><?php /* @escapeNotVerified */
+                echo __('Wish List is empty now.') ?></div>
+        </div>
+    <?php } ?>
+    </div>
+
+<?php }else { ?>
+    <div class="message info empty">
+        <div><?php /* @escapeNotVerified */
+            echo __('Wish List is empty now.') ?></div>
+    </div>
+<?php } ?>

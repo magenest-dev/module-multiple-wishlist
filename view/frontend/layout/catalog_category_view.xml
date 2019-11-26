@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+<!--
+            <referenceBlock name="category.product.addto.wishlist" remove="true"/>
+            <referenceBlock name="category.product.addto">
+                <block class="Magento\Wishlist\Block\Catalog\Product\ProductList\Item\AddTo\Wishlist"
+                       name="category.product.addto.multiwishlist" as="multiwishlist" before="compare"
+                       template="Magenest_MultipleWishlist::catalog/product/list/addto/wishlist.phtml"/>
+            </referenceBlock>
+-->
+            <block class="Magenest\MultipleWishlist\Block\Modal\Data" name="magenest_modal_content"
+                   template="Magenest_MultipleWishlist::popup-modal.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

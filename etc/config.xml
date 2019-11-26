@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <multiplewishlist>
+            <general>
+                <active>1</active>
+                <enable_facebook>1</enable_facebook>
+                <enable_twitter>1</enable_twitter>
+                <number>5</number>
+            </general>
+            <cronsendmail>
+                    <cronscheduler_email_enabled>0</cronscheduler_email_enabled>
+                    <schedule>1</schedule>
+                    <time>1</time>
+                    <frequency>D</frequency>
+                    <low_threshold>500</low_threshold>
+            </cronsendmail>
+            <email>
+                <header_template>multiplewishlist_header_email_template</header_template>
+            </email>
+        </multiplewishlist>
+    </default>
+</config>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Ui\DataProvider\Product\ProductDataProvider">
+        <arguments>
+            <argument name="addFieldStrategies" xsi:type="array">
+                <item name="count" xsi:type="object">Magenest\MultipleWishlist\Ui\DataProvider\Product\Count</item>
+                <item name="last_added" xsi:type="object">Magenest\MultipleWishlist\Ui\DataProvider\Product\LastAdded</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

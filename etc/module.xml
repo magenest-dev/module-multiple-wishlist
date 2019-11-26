@@ -1,0 +1,7 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Magenest_MultipleWishlist" setup_version="1.3.1">
+        <sequence>
+            <module name="Magento_Wishlist"/>
+        </sequence>
+    </module>
+</config>

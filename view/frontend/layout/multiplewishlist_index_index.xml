@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <title>My Wish List</title>
+        <css src="Magenest_MultipleWishlist::css/view.css"/>
+        <script src="Magenest_MultipleWishlist::js/view.js"/>
+        <script src="Magenest_MultipleWishlist::js/move-item.js"/>
+        <script src="Magenest_MultipleWishlist::js/copy-item.js"/>
+        <script src="Magenest_MultipleWishlist::js/share-wishlist.js"/>
+        <script src="Magenest_MultipleWishlist::js/description.js"/>
+        <script src="Magenest_MultipleWishlist::js/sharing.js"/>
+        <script src="Magenest_MultipleWishlist::js/add-new-wishlist.js"/>
+        <script src="Magenest_MultipleWishlist::js/openTab.js"/>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My Wish List</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <referenceBlock name="customer.wishlist" remove="true"/>
+            <block class="Magenest\MultipleWishlist\Block\Customer\MultipleWishlist" name="customer.mwishlist"
+                   template="Magenest_MultipleWishlist::view.phtml" cacheable="false"/>
+            <block class="Magenest\MultipleWishlist\Block\Modal\Data" name="magenest_modal_content"
+                   template="Magenest_MultipleWishlist::popup-modal.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

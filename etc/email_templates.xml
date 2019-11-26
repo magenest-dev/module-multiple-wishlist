@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:Magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="multiplewishlist_header_email_template" label="Header Email Template" file="multiplewishlist/header.html" type="html" module="Magenest_MultipleWishlist" area="frontend"/>
+    <template id="multiplewishlist_test_template" label="Test email" file="multiplewishlist/email_template.html" type="html" module="Magenest_MultipleWishlist" area="frontend"/>
+    <template id="multiplewishlist_cron_send_mail_product_out_of_stock" label="Product_out_of_stock" file="multiplewishlist/product_id_out_of_stock.html" type="html" module="Magenest_MultipleWishlist" area="frontend"/>
+</config>

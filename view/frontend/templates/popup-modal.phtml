@@ -1,0 +1,77 @@
+<?php
+/**
+ * @var $block \Magenest\MultipleWishlist\Block\Modal\Data
+ */
+$numberWishList = $block->scopeConfig->getValue('multiplewishlist/general/number', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+$wishlistCount = (int)$block->getCountWishlist()+1;
+?>
+
+<script>
+    require([
+        'Magenest_MultipleWishlist/js/add-to-wishlist'
+    ], function () {
+        'use strict';
+        return 0;
+    });
+</script>
+<input type="text" value="<?=$numberWishList?>" id="limitWishList" hidden="hidden" >
+<input type="text" value="<?=$wishlistCount?>" id="countWishList"  hidden="hidden" >
+<input id="base-url" value="<?php echo($block->getBaseUrl()); ?>" style="display: none"/>
+<div id="modal_content">
+    <form id="wishlist-picker" style="display: none" method="post">
+        <input name="wishlist_radio" type="radio" value="main" id="wl-rd-main" checked="checked">
+        <label for="wl-rd-main">Main</label><br>
+
+        <?php $wishlists = $block->getWishlist(); ?>
+        <?php foreach ($wishlists as $wishlist): ?>
+            <input name="wishlist_radio" type="radio" value="<?php echo($wishlist['id']); ?>"
+                   id="wl-rd-<?php echo($wishlist['id']); ?>" required>
+            <label for="wl-rd-<?php echo($wishlist['id']); ?>">
+                <?php echo($wishlist['name']); ?>
+            </label>
+            <br>
+        <?php endforeach; ?>
+<?php if ($wishlistCount<$numberWishList) {?>
+        <input name="wishlist_radio" type="radio" value="new" id="wl-rd-new">
+        <label id="labelRadio" for="wl-rd-new">New Wishlist</label>
+        <input id="new-wishlist-name" name="new_wishlist_name" type="text" placeholder="Wishlist name"  disabled>
+        <?php }else {?>
+    <label>The number of wishlists exceed the limitation(<?=$numberWishList?>)</label>
+        <?php }?>
+        <label hidden="hidden" id="limit">The number of wishlists exceed the limitation(<?=$numberWishList?>)</label>
+        <label hidden="hidden" id="error">error</label>
+        <label hidden="hidden" id="emptyname">error</label>
+        <footer class="modal-footer">
+            <button style="float: right;  margin-bottom: 10px" class="mwl-continue" id="mwl-continue" type="submit"><?=__('Continue')?></button>
+        </footer>
+    </form>
+</div>
+<div id="modal_move_wishlist">
+    <form id="wishlist-picker-move" style="display: none" method="post">
+        <input name="wishlist_select" type="radio" value="main" id="wl-rd-main" checked="checked">
+        <label for="wl-rd-main">Main</label><br>
+
+        <?php $wishlists = $block->getWishlist(); ?>
+        <?php foreach ($wishlists as $wishlist): ?>
+            <input name="wishlist_select" type="radio" value="<?php echo($wishlist['id']); ?>"
+                   id="wl-rd-<?php echo($wishlist['id']); ?>" required>
+            <label for="wl-rd-<?php echo($wishlist['id']); ?>">
+                <?php echo($wishlist['name']); ?>
+            </label>
+            <br>
+        <?php endforeach; ?>
+        <?php if ($wishlistCount<$numberWishList) {?>
+            <input name="wishlist_select" type="radio" value="new" id="wl-rd-movenew">
+            <label id="labelRadio" for="wl-rd-new">New Wishlist</label>
+            <input id="new_wishlist" name="new_wishlist_name" type="text" placeholder="Wishlist name"  disabled>
+        <?php }else {?>
+            <label>The number of wishlists exceed the limitation(<?=$numberWishList?>)</label>
+        <?php }?>
+        <label hidden="hidden" id="limit">The number of wishlists exceed the limitation(<?=$numberWishList?>)</label>
+        <label hidden="hidden" id="emptyName">error</label>
+        <footer class="modal-footer">
+            <button style="float: right;  margin-bottom: 10px" class="continue" id="continue" type="submit"><?=__('Continue')?></button>
+        </footer>
+    </form>
+</div>
+

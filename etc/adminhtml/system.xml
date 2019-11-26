@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magenest. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magenest_all" translate="label" sortOrder="100">
+            <label>Magenest</label>
+        </tab>
+
+        <section id="multiplewishlist" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Multiple Wishlist</label>
+            <tab>magenest_all</tab>
+            <resource>Magenest_MultipleWishlist::multiplewishlist_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                 <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_facebook" translate="label" type="select" sortOrder="20" showInDefault="1"
+                       showInStore="1" showInWebsite="1" canRestore="1">
+                    <label>Facebook Share Button</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="enable_twitter" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInStore="1" showInWebsite="1" canRestore="1">
+                    <label>Twitter Share Button</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="number" translate="label" type="text" sortOrder="40" showInDefault="1" showInStore="1"
+                       showInWebsite="1" canRestore="1">
+                    <label>Maximum Number Of Wishlist</label>
+                    <validate>validate-zero-or-greater</validate>
+                    <comment>This number wish list customer can create</comment>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="cronsendmail" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Email Settings</label>
+                <depends>
+                    <field id="multiplewishlist/general/active">1</field>
+                </depends>
+                <field id="frequency" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Frequency</label>
+                    <source_model>Magenest\MultipleWishlist\Model\Config\Source\Days</source_model>
+                </field>
+                <field id="time" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Interval Time</label>
+                    <comment>Enter the number to check product in wishlist for X</comment>
+                    <validate>validate-zero-or-greater validate-no-empty</validate>
+                </field>
+                <field id="schedule" translate="label" type="text" sortOrder="25" showInDefault="0" showInWebsite="0" showInStore="0">
+                    <label>schedule</label>
+                </field>
+                <field id="low_threshold" translate="label" type="text" sortOrder="40" showInDefault="1" showInStore="1"
+                       showInWebsite="1" canRestore="1">
+                    <label>Low threshold</label>
+                    <validate>validate-zero-or-greater validate-no-empty</validate>
+                    <comment>This number product is checked to remind customer.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

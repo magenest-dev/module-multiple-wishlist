@@ -1,0 +1,17 @@
+<?php
+$wishlistId = $block->getWishListId();
+$data = $block->getWishlistItems($wishlistId);
+?>
+<head>
+    <!--meta tag facebook-->
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="WishList <?=$data['name']?>"/>
+    <meta property="og:description" content="Click to see wishlist"/>
+    <meta property="og:image" content="<?=$data['firstItem']['img_link']?>"/>
+
+    <!--meta tag twitter-->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="WishList <?=$data['name']?>">
+    <meta name="twitter:description" content="Click to see wishlist">
+    <meta name="twitter:image" content="<?=$data['firstItem']['img_link']?>">
+</head>

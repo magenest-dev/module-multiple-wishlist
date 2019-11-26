@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+        <!--
+        /**
+         * Copyright © 2015 Magento. All rights reserved.
+         * See COPYING.txt for license details.
+         */
+        -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="\Magenest\MultipleWishlist\Controller\MultipleWishlistProviderInterface" type="\Magenest\MultipleWishlist\Controller\MultipleWishlistProvider" />
+    <type name="Magenest\MultipleWishlist\Model\ResourceModel\Item\Collection\Grid">
+        <arguments>
+            <argument name="resource" xsi:type="object">Magento\Wishlist\Model\ResourceModel\Item</argument>
+        </arguments>
+    </type>
+    <type name="Magenest\MultipleWishlist\Helper\Data">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <plugin name="override_wishlist_counter" type="\Magenest\MultipleWishlist\Plugin\Customer\SectionLoad" sortOrder="1" />
+    </type>
+
+    <type name="Magento\Wishlist\Controller\Index\Remove">
+        <plugin name="set_baseurl" type="\Magenest\MultipleWishlist\Plugin\setUrlRemoveInMain" sortOrder="2" />
+    </type>
+
+    <type name="Magento\Wishlist\Controller\Index\Cart">
+        <plugin name="not_show_message" type="\Magenest\MultipleWishlist\Plugin\setMessageAddToCart" sortOrder="3" />
+    </type>
+
+    <type name="Magento\Wishlist\Controller\Index\Allcart">
+        <plugin name="not_show_message_allcart" type="\Magenest\MultipleWishlist\Plugin\setMessageAddToAllCart" sortOrder="4" />
+    </type>
+
+    <type name="Magento\CatalogRule\Controller\Adminhtml\Promo\Catalog\Save">
+        <plugin name="remind_customer_catalog_rule" type="\Magenest\MultipleWishlist\Plugin\Customer\RemindEmailRule" sortOrder="2" />
+    </type>
+    <!--Report WishLisht-->
+   <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="magenest_multiplewishlist_report_listing_data_source" xsi:type="string">
+                    Magenest\MultipleWishlist\Model\ResourceModel\ReportWishlist\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magenest\MultipleWishlist\Model\ResourceModel\ReportWishlist\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">magenest_reportwishlist</argument>
+            <argument name="resourceModel" xsi:type="string">Magenest\MultipleWishlist\Model\ResourceModel\ReportWishlist</argument>
+        </arguments>
+    </virtualType>
+
+    <!--Plugin Dont Delete Product After to cart Main-->
+    <type name="Magento\Wishlist\Model\Item">
+        <plugin name="overide_add_to_cart" type="\Magenest\MultipleWishlist\Plugin\Customer\AddToCart" sortOrder="2" />
+    </type>
+</config>

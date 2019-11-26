@@ -1,0 +1,300 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+/**
+ * @var $block \Magenest\MultipleWishlist\Block\Customer\MultipleWishlist
+ */
+$wishlists = $block->getWishlist();
+$mainWishlist = $block->getMainWishlist();
+$customerId = $block->getCustomerId();
+$wishListMainId = $block->getWishListMainId();
+$wishlistCookieId = $block->getTabCookieId();
+$numberWishList = $block->_scopeConfig->getValue('multiplewishlist/general/number', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+$count = $block->getCountWishlist();
+?>
+<script>
+    require(
+        [
+            'Magento_Customer/js/customer-data',
+            'Magenest_MultipleWishlist/js/update-wishlist'
+        ], function (customerData) {
+            var interval = setInterval(function () {
+                try {
+                    var sections = ['cart', 'wishlist'];
+                    customerData.invalidate(sections);
+                    customerData.reload(sections, true);
+                    clearInterval(interval);
+                } catch (e) {
+                }
+            }, 1000);
+        });
+</script>
+<?php
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+    <?= $block->getToolbarHtml() ?>
+    <?= $block->getAdditionalHtml() ?>
+    <?php
+        $viewMode = 'grid';
+        $imageDisplayArea = 'category_page_grid';
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    ?>
+    <?php/** Handling Jquery*/?>
+    <input type="number" value="<?= $numberWishList ?>" id="numberWishList" hidden="hidden">
+    <input type="number" value="<?= $count ?>" id="countWishList" hidden="hidden">
+    <input value="<?= $wishlistCookieId ?>" class="wishlistIdcookie" hidden="hidden">
+    <?php/** Form Add New Wish List*/?>
+    <div>
+        <form id="add-new" style="margin-bottom: 30px;"
+              action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/add'); ?>">
+        <span style="display: inline;">
+            <input name="wishlist" type="hidden" value="new">
+            <input id="new-name" style="width: 25%; margin-right: 3%"  name="newName" type="text" placeholder="Name New Wish List"
+                   maxlength="20">
+            <button id="add-wishlist" class="action primary" type="submit"><?= __('Add New Wish List') ?></button>
+            <span hidden="hidden" id="error-view">error</span>
+            <span hidden="hidden" id="error-modal">error</span>
+        </span>
+        </form>
+    </div>
+    <?php/** All Tab Wish List*/?>
+    <div class="tab">
+        <button class="tablinks active" id="wl0" onclick="openTab(event, 'wl-0')"><?= __(' Main') ?></button>
+        <?php foreach ($wishlists as $wishlist): ?>
+            <button class="tablinks" id="wl<?php echo $wishlist['id']; ?>"
+                    onclick="openTab(event, 'wl-<?php echo $wishlist['id']; ?>' )"><?php echo $wishlist['name']; ?></button>
+        <?php endforeach; ?>
+    </div>
+    <?php/** Tab Main Wish List */?>
+<div id="wl-0" class="tabcontent" style="display: block">
+    <div class="products wrapper <?= /* @escapeNotVerified */ $viewMode ?> products-<?= /* @escapeNotVerified */ $viewMode ?>">
+        <ol class="products list items product-items">
+            <?php if (!empty($mainWishlist)): ?>
+            <?php foreach ($mainWishlist as $item): ?>
+                <li class="item product product-item" style="padding: 8px;">
+                    <div id="main-<?php echo $item['id']; ?>"  class="product-item-info" data-container="product-<?= /* @escapeNotVerified */ $viewMode ?>">
+                        <?php // Product Image ?>
+                        <a href="<?php echo $item['product_url']; ?>" class="product photo product-item-photo" tabindex="-1">
+                            <span class="product-image-container" style="width:240px;">
+                                <span class="product-image-wrapper" style="padding-bottom: 125%;">
+                                     <img class="product-image-photo" width="240" height="300" src="<?php echo $item['img_link']; ?>">
+                                </span>
+                             </span>
+                        </a>
+                        <div class="product details product-item-details">
+                            <?php
+                            $_productNameStripped = $block->stripTags($item['product_name'], null, true);
+                            ?>
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?= /* @escapeNotVerified */ $item['product_url'] ?>">
+                                    <?php echo $item['product_name']; ?>
+                                </a>
+                            </strong>
+                            <?php echo $item['price']; ?>
+                            <div class="product-item-inner">
+                                <div class="product actions product-item-actions">
+                                    <div class="actions-primary">
+                                        <?php if ($item['product']->isSaleable()): ?>
+                                            <?php $postParams = $block->getAddToCartPostParams($item['product']); ?>
+                                            <form data-role="tocart-form" data-product-sku="<?= $block->escapeHtml($item['product']->getSku()) ?>" action="<?= /* @NoEscape */ $postParams['action'] ?>" method="post">
+                                                <input type="hidden" name="product" value="<?= /* @escapeNotVerified */ $postParams['data']['product'] ?>">
+                                                <input type="hidden" name="<?= /* @escapeNotVerified */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @escapeNotVerified */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                                <?= $block->getBlockHtml('formkey') ?>
+                                                <button type="submit"
+                                                        title="<?= $block->escapeHtml(__('Add to Cart')) ?>"
+                                                        class="action tocart primary">
+                                                    <span><?= /* @escapeNotVerified */ __('Add to Cart') ?></span>
+                                                </button>
+                                            </form>
+                                        <?php else: ?>
+                                            <?php if ($item['product']->isAvailable()): ?>
+                                                <div class="stock available"><span><?= /* @escapeNotVerified */ __('In stock') ?></span></div>
+                                            <?php else: ?>
+                                                <div class="stock unavailable"><span><?= /* @escapeNotVerified */ __('Out of stock') ?></span></div>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div data-role="add-to-links" class="actions-secondary" style="display: inline-block;width: auto;padding-left: 0px">
+                                        <form class="remove-form" onclick="if (!confirm('Are you sure?')) { return false }"
+                                              action="<?php echo($block->getBaseUrl() . 'wishlist/index/remove'); ?>"
+                                              style="display: inline-block">
+                                            <input type="hidden" name="form_key"
+                                                   value="<?php echo $block->getFormKey(); ?>">
+                                            <input type="hidden" name="customer_id"
+                                                   value="<?php echo $customerId; ?>">
+                                            <button type="submit" name="item"
+                                                    value="<?php echo $item['id']; ?>"><?= __('Remove') ?></button>
+                                        </form>
+                                        <button class="move-item"
+                                                value="main-<?php echo $item['id']; ?>"
+                                                style="display: inline-block">
+                                            <?= __('Move') ?>
+                                        </button>
+                                        <button class="copy-item" style="display: inline-block"
+                                                value="main-<?php echo $item['id']; ?>">
+                                            <?= __('Copy') ?>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+            <div class="mw-button-actions" style="display: flex; margin-top: 20px; margin-bottom: 20px; justify-content: flex-end">
+                <form style="margin-left: 20px" method="get"
+                      action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/sharing'); ?>">
+                    <input type="hidden" name="wishlist" value="<?= __('main'); ?>">
+                    <input type="hidden" name="wishListMainId" value="<?= $wishListMainId ?>">
+                    <button type="submit"><?= __('Share') ?></button>
+                </form>
+                <form style="margin-right: 20px;margin-left: 20px" class="all-to-cart-main"
+                      action="<?php echo($block->getBaseUrl() . 'wishlist/index/allcart'); ?>" method="post">
+                    <input type="hidden" name="form_key"
+                           value="<?php echo $block->getFormKey(); ?>">
+                    <button type="submit" class="action primary"><?= __('Add All to Cart') ?>
+                    </button>
+                </form>
+            </div>
+            <?php else: ?>
+                <div class="message info empty"><div><p><?= __('There is no item in this wishlist') ?></p></div></div>
+            <?php endif; ?>
+        </ol>
+    </div>
+</div>
+    <?php/** Tab Item In Wish List */?>
+            <?php foreach ($wishlists as $wishlist): ?>
+                <div id="wl-<?php echo $wishlist['id']; ?>" class="tabcontent">
+                    <div style="display: flex; margin-top: 20px; margin-bottom: 20px">
+                        <form action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/edit'); ?>">
+                            <span style="display: inline;">
+                                 <input type="hidden" name="wishlist-id" value="<?php echo $wishlist['id']; ?>">
+                                 <input style="width: 50%; vertical-align: top" type="text" name="new-name" value="<?= $wishlist['name'] ?>">
+                                 <button type="submit"><?= __('Rename') ?></button>
+                             </span>
+                        </form>
+                        <form action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/delete'); ?>">
+                            <button type="submit" name="wishlist-id" onclick="if (!confirm('Are you sure?')) { return false }"
+                                    value="<?php echo $wishlist['id']; ?>">
+                                <?= __('Delete Wishlist') ?>
+                            </button>
+                        </form>
+                    </div>
+                    <?php $items = $block->getItems($wishlist['id']); ?>
+                    <div class="products wrapper grid products-grid">
+                        <ol class="products list items product-items">
+                            <?php if (!empty($items)): ?>
+                            <?php foreach ($items as $item): ?>
+                            <li class="item product product-item" style="padding: 8px">
+                                <div id="<?php echo $item['id']; ?>" class="product-item-info" data-container="product-<?= /* @escapeNotVerified */ $viewMode ?>">
+                                    <?php // Product Image ?>
+                                    <a href="<?php echo $item['product_url']; ?>" class="product photo product-item-photo" tabindex="-1">
+                                        <span class="product-image-container" style="width:240px;">
+                                            <span class="product-image-wrapper" style="padding-bottom: 125%;">
+                                                 <img class="product-image-photo" width="240" height="300" src="<?php echo $item['img_link']; ?>">
+                                            </span>
+                                         </span>
+                                    </a>
+                                    <div class="product details product-item-details">
+                                        <?php
+                                        $_productNameStripped = $block->stripTags($item['product_name'], null, true);
+                                        ?>
+                                        <strong class="product name product-item-name">
+                                            <a class="product-item-link"
+                                               href="<?= /* @escapeNotVerified */ $item['product_url'] ?>">
+                                                <?php echo $item['product_name']; ?>
+                                            </a>
+                                        </strong>
+                                        <?php echo $item['price']; ?>
+                                        <div class="product-item-inner">
+                                            <div class="product actions product-item-actions">
+                                                <div class="actions-primary">
+                                                    <?php if ($item['product']->isSaleable()): ?>
+                                                        <?php $postParams = $block->getAddToCartPostParams($item['product']); ?>
+                                                        <form data-role="tocart-form" data-product-sku="<?= $block->escapeHtml($item['product']->getSku()) ?>" action="<?= /* @NoEscape */ $postParams['action'] ?>" method="post">
+                                                            <input type="hidden" name="product" value="<?= /* @escapeNotVerified */ $postParams['data']['product'] ?>">
+                                                            <input type="hidden" name="<?= /* @escapeNotVerified */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @escapeNotVerified */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                                            <?= $block->getBlockHtml('formkey') ?>
+                                                            <button type="submit"
+                                                                    title="<?= $block->escapeHtml(__('Add to Cart')) ?>"
+                                                                    class="action tocart primary">
+                                                                <span><?= /* @escapeNotVerified */ __('Add to Cart') ?></span>
+                                                            </button>
+                                                        </form>
+                                                    <?php else: ?>
+                                                        <?php if ($item['product']->isAvailable()): ?>
+                                                            <div class="stock available"><span><?= /* @escapeNotVerified */ __('In stock') ?></span></div>
+                                                        <?php else: ?>
+                                                            <div class="stock unavailable"><span><?= /* @escapeNotVerified */ __('Out of stock') ?></span></div>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div data-role="add-to-links" class="actions-secondary" style="display: inline-block;width: auto;padding-left: 0px">
+                                                    <form action="<?php echo($block->getBaseUrl() . 'multiplewishlist/item/delete'); ?>"
+                                                          style="display: inline-block" onclick="if (!confirm('Are you sure?')) { return false }">
+                                                            <input type="hidden" name="wishlistId" value="<?php echo $wishlist['id']; ?>">
+                                                                <button type="submit" name="item-id" value="<?php echo $item['id']; ?>"><?= __('Remove') ?></button>
+                                                    </form>
+                                                    <button class="move-item"
+                                                            value="<?php echo $item['id']; ?>"
+                                                            style="display: inline-block">
+                                                        <?= __('Move') ?>
+                                                    </button>
+                                                    <button class="copy-item"
+                                                            value="<?php echo $item['id']; ?>"
+                                                            style="display: inline-block">
+                                                        <?= __('Copy') ?>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php endforeach; ?>
+                                <div class="mw-button-actions" style="display: flex; margin-top: 20px; margin-bottom: 20px; justify-content: flex-end">
+                                    <form style="margin-left: 20px" method="get"
+                                          action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/sharing'); ?>">
+                                        <input type="hidden" name="wishlist" value="<?php echo $wishlist['id']; ?>">
+                                        <button type="submit"><?= __('Share') ?></button>
+                                    </form>
+                                    <form style="margin-right: 20px;margin-left: 20px" method="post"
+                                          action="<?php echo($block->getBaseUrl() . 'multiplewishlist/index/allcart'); ?>" class="addAllToCart">
+                                        <input type="hidden" name="wishlist" value="<?php echo $wishlist['id']; ?>">
+                                        <button type="submit" class="action primary"><?= __('Add All to cart') ?></button>
+                                    </form>
+                                </div>
+                            <?php else: ?>
+                                <p><?= __('No item in this wishlist') ?></p>
+                            <?php endif; ?>
+                        </ol>
+                    </div>
+                </div>
+             <?php endforeach; ?>
+<?php if (!$block->isRedirectToCartEnabled() && isset($item)) : ?>
+    <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                    "product_sku": "<?= /* @NoEscape */ $item['product']->getSku() ?>"
+                }
+            }
+        }
+        </script>
+<?php endif; ?>

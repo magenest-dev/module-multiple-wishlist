@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Email Product List" design_abstraction="custom">
+    <body>
+        <block class="Magenest\MultipleWishlist\Block\Customer\AllWishList" name="additional.product.info" template="Magenest_MultipleWishlist::email/product.phtml"/>
+    </body>
+</page>
